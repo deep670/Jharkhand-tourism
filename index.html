@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jharkhand Eco & Cultural Tourism Platform</title>
+    <title>Jharkhand Tourism - Discover the Heart of India</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -75,207 +75,15 @@
             color: white;
             backdrop-filter: blur(10px);
         }
-        
-        .sentiment-positive { color: #10b981; }
-        .sentiment-negative { color: #ef4444; }
-        .sentiment-neutral { color: #6b7280; }
-        
-        .blockchain-verified {
-            border: 2px solid #10b981;
-            position: relative;
-        }
-        
-        .blockchain-verified::after {
-            content: '✓ Verified';
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #10b981;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .chatbot-messages {
-            max-height: 300px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-        }
-        
-        .dashboard-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
     </style>
 </head>
 <body class="antialiased">
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect } = React;
 
-        // Data storage
-        const tourismData = {
-            destinations: [
-                {
-                    id: 1,
-                    name: "Netarhat",
-                    image: "https://placehold.co/600x400/4f46e5/white?text=Netarhat+Hills",
-                    description: "Queen of Chotanagpur with breathtaking sunrise views",
-                    type: "nature",
-                    rating: 4.8
-                },
-                {
-                    id: 2,
-                    name: "Baba Baidyanath Dham",
-                    image: "https://placehold.co/600x400/059669/white?text=Baidyanath+Temple",
-                    description: "One of the 12 Jyotirlingas, major Hindu pilgrimage site",
-                    type: "spiritual",
-                    rating: 4.9
-                },
-                {
-                    id: 3,
-                    name: "Betla National Park",
-                    image: "https://placehold.co/600x400/1e40af/white?text=Betla+Safari",
-                    description: "Wildlife sanctuary with tigers, elephants, and leopards",
-                    type: "adventure",
-                    rating: 4.7
-                },
-                {
-                    id: 4,
-                    name: "Hundru Falls",
-                    image: "https://placehold.co/600x400/0891b2/white?text=Hundru+Falls",
-                    description: "Spectacular 320 feet waterfall perfect for nature outings",
-                    type: "nature",
-                    rating: 4.6
-                },
-                {
-                    id: 5,
-                    name: "Patratu Valley",
-                    image: "https://placehold.co/600x400/4f46e5/white?text=Patratu+Valley",
-                    description: "Famous for winding roads through lush green landscapes",
-                    type: "nature",
-                    rating: 4.5
-                },
-                {
-                    id: 6,
-                    name: "Jubilee Park",
-                    image: "https://placehold.co/600x400/059669/white?text=Jubilee+Park",
-                    description: "Urban park with zoo, fountains, and beautiful gardens",
-                    type: "culture",
-                    rating: 4.4
-                }
-            ],
-            marketplace: [
-                {
-                    id: 1,
-                    name: "Tribal Dokra Art",
-                    image: "https://placehold.co/400x300/1e40af/white?text=Dokra+Art",
-                    price: "1500",
-                    description: "Handcrafted metal art from tribal artisans",
-                    verified: true,
-                    rating: 4.9
-                },
-                {
-                    id: 2,
-                    name: "Handloom Sarees",
-                    image: "https://placehold.co/400x300/d946ef/white?text=Handloom+Sarees",
-                    price: "2500",
-                    description: "Traditional handwoven sarees with tribal patterns",
-                    verified: true,
-                    rating: 4.7
-                },
-                {
-                    id: 3,
-                    name: "Forest Honey",
-                    image: "https://placehold.co/400x300/ea580c/white?text=Forest+Honey",
-                    price: "450",
-                    description: "Organic honey from tribal forest communities",
-                    verified: true,
-                    rating: 4.8
-                },
-                {
-                    id: 4,
-                    name: "Terracotta Pottery",
-                    image: "https://placehold.co/400x300/059669/white?text=Terracotta",
-                    price: "800",
-                    description: "Traditional terracotta pots and decor items",
-                    verified: false,
-                    rating: 4.6
-                }
-            ],
-            events: [
-                {
-                    id: 1,
-                    name: "Karma Festival",
-                    date: "2024-08-15",
-                    image: "https://placehold.co/400x300/d946ef/white?text=Karma+Festival",
-                    description: "Tribal festival celebrating nature and harvest season"
-                },
-                {
-                    id: 2,
-                    name: "Sarhul Festival",
-                    date: "2024-03-20",
-                    image: "https://placehold.co/400x300/4f46e5/white?text=Sarhul+Festival",
-                    description: "Spring festival worshipping trees and nature spirits"
-                },
-                {
-                    id: 3,
-                    name: "Tusu Parab",
-                    date: "2024-12-05",
-                    image: "https://placehold.co/400x300/ea580c/white?text=Tusu+Parab",
-                    description: "Harvest festival with folk songs and dances"
-                }
-            ],
-            reviews: [
-                {
-                    id: 1,
-                    user: "Priya S.",
-                    rating: 5,
-                    comment: "Absolutely loved the cultural experience! The AI itinerary planner worked perfectly.",
-                    sentiment: "positive"
-                },
-                {
-                    id: 2,
-                    user: "Rahul M.",
-                    rating: 4,
-                    comment: "Great platform but transport information could be more accurate.",
-                    sentiment: "positive"
-                },
-                {
-                    id: 3,
-                    user: "Sneha K.",
-                    rating: 2,
-                    comment: "Had issues with homestay booking confirmation. Need better support.",
-                    sentiment: "negative"
-                },
-                {
-                    id: 4,
-                    user: "Amit R.",
-                    rating: 5,
-                    comment: "The blockchain verification for local guides gave me peace of mind!",
-                    sentiment: "positive"
-                }
-            ]
-        };
-
-        // Helper Components
-        const Stars = ({ count }) => (
-            <span className="text-yellow-400">
-                {"★".repeat(count) + "☆".repeat(5 - count)}
-            </span>
-        );
-
-        const SentimentIndicator = ({ sentiment }) => (
-            <span className={`sentiment-${sentiment} text-sm font-medium`}>
-                {sentiment.charAt(0).toUpperCase() + sentiment.slice(1)}
-            </span>
-        );
-
-        // Main Components
+        // Header Component
         const Header = () => {
             const [isMenuOpen, setIsMenuOpen] = useState(false);
             const [currentLanguage, setCurrentLanguage] = useState('English');
@@ -291,14 +99,14 @@
                                 <h1 className="text-2xl font-bold">Jharkhand Tourism</h1>
                             </div>
 
+                            {/* Desktop Navigation */}
                             <nav className="hidden md:flex items-center space-x-8">
                                 <a href="#hero" className="hover:text-green-300 transition-colors">Home</a>
                                 <a href="#destinations" className="hover:text-green-300 transition-colors">Destinations</a>
                                 <a href="#itinerary" className="hover:text-green-300 transition-colors">Itinerary</a>
                                 <a href="#marketplace" className="hover:text-green-300 transition-colors">Marketplace</a>
-                                <a href="#events" className="hover:text-green-300 transition-colors">Events</a>
-                                <a href="#reviews" className="hover:text-green-300 transition-colors">Reviews</a>
                                 <a href="#dashboard" className="hover:text-green-300 transition-colors">Dashboard</a>
+                                <a href="#map" className="hover:text-green-300 transition-colors">Interactive Map</a>
                                 <select 
                                     className="language-selector"
                                     value={currentLanguage}
@@ -308,13 +116,13 @@
                                     <option value="Hindi">Hindi</option>
                                     <option value="Bengali">Bengali</option>
                                     <option value="Santhali">Santhali</option>
-                                    <option value="Ho">Ho</option>
                                 </select>
                                 <button className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-100 transition-colors">
                                     Login
                                 </button>
                             </nav>
 
+                            {/* Mobile Menu Button */}
                             <button 
                                 className="md:hidden text-2xl"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -323,6 +131,7 @@
                             </button>
                         </div>
 
+                        {/* Mobile Navigation */}
                         {isMenuOpen && (
                             <div className="md:hidden mt-4 pb-4">
                                 <div className="flex flex-col space-y-4">
@@ -330,9 +139,8 @@
                                     <a href="#destinations" className="hover:text-green-300 transition-colors">Destinations</a>
                                     <a href="#itinerary" className="hover:text-green-300 transition-colors">Itinerary</a>
                                     <a href="#marketplace" className="hover:text-green-300 transition-colors">Marketplace</a>
-                                    <a href="#events" className="hover:text-green-300 transition-colors">Events</a>
-                                    <a href="#reviews" className="hover:text-green-300 transition-colors">Reviews</a>
                                     <a href="#dashboard" className="hover:text-green-300 transition-colors">Dashboard</a>
+                                    <a href="#map" className="hover:text-green-300 transition-colors">Interactive Map</a>
                                     <select 
                                         className="language-selector w-full"
                                         value={currentLanguage}
@@ -342,7 +150,6 @@
                                         <option value="Hindi">Hindi</option>
                                         <option value="Bengali">Bengali</option>
                                         <option value="Santhali">Santhali</option>
-                                        <option value="Ho">Ho</option>
                                     </select>
                                     <button className="bg-white text-green-800 px-6 py-2 rounded-full font-semibold hover:bg-green-100 transition-colors">
                                         Login
@@ -355,15 +162,16 @@
             );
         };
 
+        // Hero Section
         const HeroSection = () => {
             return (
-                <section id="hero" className="gradient-bg hero-pattern text-white py-20">
+                <section id="hero" className="bg-white py-20">
                     <div className="container mx-auto px-4">
                         <div className="flex flex-col lg:flex-row items-center justify-between">
                             <div className="lg:w-1/2 mb-10 lg:mb-0">
                                 <h2 className="text-5xl font-bold mb-6 leading-tight text-gray-800">
                                     Discover the Hidden Gem of India<br />
-                                    <span className="text-green-500">Jharkhand</span>
+                                    <span className="text-green-600">Jharkhand</span>
                                 </h2>
                                 <p className="text-xl mb-8 text-gray-600">
                                     Experience the perfect blend of natural beauty, rich tribal culture, and 
@@ -383,8 +191,8 @@
                             <div className="lg:w-1/2">
                                 <div className="relative">
                                     <img 
-                                        src="https://placehold.co/600x400/065f46/white?text=Jharkhand+Beauty" 
-                                        alt="Panoramic view of Jharkhand's natural landscapes and tribal culture"
+                                        src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/907e7ef9-236d-4fd2-94db-13d82fba0c39.png" 
+                                        alt="Panoramic view of Jharkhand landscape with lush green forests, waterfalls, and tribal villages nestled in the valleys"
                                         className="rounded-2xl shadow-2xl w-full"
                                     />
                                     <div className="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl shadow-lg">
@@ -394,7 +202,7 @@
                                             </div>
                                             <div>
                                                 <p className="text-sm text-gray-600">AI Assistant</p>
-                                                <p className="font-semibold">Ready to help you plan!</p>
+                                                <p className="font-semibold text-gray-800">Ready to help you plan!</p>
                                             </div>
                                         </div>
                                     </div>
@@ -406,43 +214,44 @@
             );
         };
 
+        // Features Section
         const FeaturesSection = () => {
             const features = [
                 {
                     icon: "fas fa-brain",
                     color: "bg-blue-100 text-blue-600",
                     title: "AI Itinerary Planning",
-                    description: "Get personalized travel plans based on your preferences and interests"
+                    description: "Get personalized travel plans based on your preferences, budget, and interests."
                 },
                 {
                     icon: "fas fa-shield-alt",
                     color: "bg-green-100 text-green-600",
-                    title: "Blockchain Security",
-                    description: "Secure transactions and verified local guides for your safety"
+                    title: "Blockchain Verification",
+                    description: "Secure transactions and verified local guides for your safety and trust."
                 },
                 {
                     icon: "fas fa-map-marked-alt",
                     color: "bg-purple-100 text-purple-600",
-                    title: "Interactive Maps",
-                    description: "Explore destinations with real-time location and AR features"
+                    title: "Interactive Maps & AR/VR",
+                    description: "Explore destinations with real-time location info and immersive AR/VR previews."
                 },
                 {
                     icon: "fas fa-store",
                     color: "bg-orange-100 text-orange-600",
                     title: "Local Marketplace",
-                    description: "Discover authentic tribal handicrafts and eco-friendly products"
+                    description: "Discover authentic tribal handicrafts and eco-friendly products directly from artisans."
                 },
                 {
                     icon: "fas fa-comments",
                     color: "bg-pink-100 text-pink-600",
-                    title: "Multilingual Support",
-                    description: "Communicate easily in local languages with AI translation"
+                    title: "Multilingual Chatbot",
+                    description: "Get instant support in English, Hindi, Bengali, and local tribal languages."
                 },
                 {
                     icon: "fas fa-chart-line",
                     color: "bg-indigo-100 text-indigo-600",
                     title: "Smart Analytics",
-                    description: "Data-driven insights for better travel experiences"
+                    description: "Data-driven insights for tourism officials to monitor trends and impact."
                 }
             ];
 
@@ -474,7 +283,39 @@
             );
         };
 
+        // Destinations Section
         const DestinationsSection = () => {
+            const destinations = [
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/970c0df4-a25f-4594-b1a4-624bc560aa50.png",
+                    alt: "Netarhat Hill Station panoramic view with misty mountains and pine forests during sunrise",
+                    title: "Netarhat",
+                    description: "The 'Queen of Chotanagpur' with breathtaking sunrises from Magnolia Point.",
+                    rating: 4.8
+                },
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f6f0761e-1869-4e78-831e-451e5e40e698.png",
+                    alt: "Hundru Falls powerful waterfall cascading down rocky cliffs surrounded by green vegetation",
+                    title: "Hundru Falls",
+                    description: "A majestic waterfall near Ranchi, where the Subarnarekha River falls from 320 feet. It's a great spot for a day trip.",
+                    rating: 4.6
+                },
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1d25c43d-0f0e-43cf-be61-efc8f25b2737.png",
+                    alt: "Betla National Park showing dense forest with elephants and deer in natural habitat",
+                    title: "Betla National Park",
+                    description: "Home to a diverse range of wildlife, including tigers and elephants.",
+                    rating: 4.9
+                },
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/61e8605c-3c81-420a-86c5-4927f9999026.png",
+                    alt: "Baba Baidyanath Dham temple, one of the 12 Jyotirlingas, bustling with devotees",
+                    title: "Baba Baidyanath Dham",
+                    description: "A sacred pilgrimage site for Lord Shiva, one of the 12 Jyotirlingas of India.",
+                    rating: 4.7
+                }
+            ];
+
             return (
                 <section id="destinations" className="py-20 bg-gray-50">
                     <div className="container mx-auto px-4">
@@ -487,13 +328,13 @@
                                 Jharkhand a unique travel experience
                             </p>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {tourismData.destinations.map((destination) => (
-                                <div key={destination.id} className="card-hover bg-white rounded-2xl overflow-hidden shadow-md">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            {destinations.map((destination, index) => (
+                                <div key={index} className="card-hover bg-white rounded-2xl overflow-hidden shadow-md">
                                     <div className="relative">
                                         <img 
                                             src={destination.image} 
-                                            alt={destination.name}
+                                            alt={destination.alt}
                                             className="w-full h-48 object-cover"
                                         />
                                         <div className="absolute top-4 right-4 bg-white px-3 py-1 rounded-full text-sm font-semibold text-green-600">
@@ -502,11 +343,8 @@
                                         </div>
                                     </div>
                                     <div className="p-6">
-                                        <h3 className="text-xl font-semibold text-gray-800 mb-2">{destination.name}</h3>
+                                        <h3 className="text-xl font-semibold text-gray-800 mb-2">{destination.title}</h3>
                                         <p className="text-gray-600 mb-4">{destination.description}</p>
-                                        <span className="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm mb-4">
-                                            {destination.type}
-                                        </span>
                                         <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
                                             Explore More
                                         </button>
@@ -519,15 +357,23 @@
             );
         };
 
+        // AI Itinerary Planner
         const ItineraryPlanner = () => {
             const [preferences, setPreferences] = useState({
-                days: '3',
+                duration: '3',
                 budget: 'medium',
                 interests: ['nature', 'culture']
             });
+            const [itinerary, setItinerary] = useState(null);
 
             const generateItinerary = () => {
-                alert('AI Itinerary generated! Planning your perfect Jharkhand trip...');
+                const newItinerary = {
+                    plan: `Day 1: Explore Deoghar's spiritual sites, including Baba Baidyanath Dham and Trikut Pahar. Enjoy a local meal.
+                    Day 2: Travel to Netarhat. Witness the stunning sunrise from Magnolia Point and visit the Koel View Point for sunset.
+                    Day 3: Head to Betla National Park for a morning safari. Spot local wildlife before heading back.`,
+                    cost: '₹5,000-₹8,000'
+                };
+                setItinerary(newItinerary);
             };
 
             return (
@@ -551,8 +397,8 @@
                                             <label className="block text-sm font-medium text-gray-700 mb-2">Trip Duration</label>
                                             <select 
                                                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                                                value={preferences.days}
-                                                onChange={(e) => setPreferences({...preferences, days: e.target.value})}
+                                                value={preferences.duration}
+                                                onChange={(e) => setPreferences({...preferences, duration: e.target.value})}
                                             >
                                                 <option value="1">1 Day</option>
                                                 <option value="2">2 Days</option>
@@ -608,19 +454,26 @@
                                 
                                 <div>
                                     <h3 className="text-2xl font-semibold mb-6">Your AI Itinerary</h3>
-                                    <div className="bg-white p-6 rounded-lg shadow-inner">
-                                        <div className="text-center py-8">
-                                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                                <i className="fas fa-robot text-green-600 text-2xl"></i>
+                                    <div className="bg-white p-6 rounded-lg shadow-inner min-h-[300px] flex flex-col justify-center items-center">
+                                        {itinerary ? (
+                                            <div className="w-full">
+                                                <p className="text-gray-800 font-semibold mb-4 whitespace-pre-wrap">{itinerary.plan}</p>
+                                                <p className="text-sm text-gray-500">Estimated Cost: {itinerary.cost}</p>
                                             </div>
-                                            <p className="text-gray-600">Your personalized itinerary will appear here</p>
-                                            <button 
-                                                onClick={generateItinerary}
-                                                className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
-                                            >
-                                                Generate Itinerary
-                                            </button>
-                                        </div>
+                                        ) : (
+                                            <div className="text-center py-8">
+                                                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                    <i className="fas fa-route text-green-600 text-2xl"></i>
+                                                </div>
+                                                <p className="text-gray-600">Your personalized itinerary will appear here</p>
+                                            </div>
+                                        )}
+                                        <button 
+                                            onClick={generateItinerary}
+                                            className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                                        >
+                                            Generate Itinerary
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -630,7 +483,39 @@
             );
         };
 
-        const MarketplaceSection = ({ onAddToCart }) => {
+        // Marketplace Section
+        const MarketplaceSection = () => {
+            const products = [
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/682166ca-0eaa-41cb-b1f5-93409be7a198.png",
+                    alt: "Traditional tribal bamboo handicrafts and woven baskets from Jharkhand artisans",
+                    title: "Tribal Handicrafts",
+                    price: "₹1,200",
+                    rating: 4.9
+                },
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4847e335-502a-436f-b25b-7c40552636a0.png",
+                    alt: "Organic forest honey collection from tribal communities in pristine environments",
+                    title: "Organic Forest Honey",
+                    price: "₹450",
+                    rating: 4.8
+                },
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e77e8a93-52fe-49ed-9602-581333e9d020.png",
+                    alt: "Handloom textiles with traditional tribal patterns and natural dyes",
+                    title: "Handloom Textiles",
+                    price: "₹2,500",
+                    rating: 4.7
+                },
+                {
+                    image: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7027d7e1-88c9-43c3-8f81-5619cf8877cf.png",
+                    alt: "Traditional tribal jewelry made with natural materials and ancient techniques",
+                    title: "Tribal Jewelry",
+                    price: "₹800",
+                    rating: 4.9
+                }
+            ];
+
             return (
                 <section id="marketplace" className="py-20 bg-gray-50">
                     <div className="container mx-auto px-4">
@@ -644,26 +529,22 @@
                             </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {tourismData.marketplace.map((product) => (
-                                <div key={product.id} className={`card-hover bg-white rounded-2xl overflow-hidden shadow-md ${product.verified ? 'blockchain-verified' : ''}`}>
+                            {products.map((product, index) => (
+                                <div key={index} className="card-hover bg-white rounded-2xl overflow-hidden shadow-md">
                                     <img 
                                         src={product.image} 
-                                        alt={product.name}
+                                        alt={product.alt}
                                         className="w-full h-48 object-cover"
                                     />
                                     <div className="p-6">
-                                        <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
+                                        <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.title}</h3>
                                         <div className="flex justify-between items-center mb-3">
-                                            <span className="text-2xl font-bold text-green-600">₹{product.price}</span>
+                                            <span className="text-2xl font-bold text-green-600">{product.price}</span>
                                             <span className="text-sm text-yellow-500">
                                                 <i className="fas fa-star"></i> {product.rating}
                                             </span>
                                         </div>
-                                        <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                                        <button 
-                                            onClick={() => onAddToCart(product)}
-                                            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors"
-                                        >
+                                        <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
                                             Add to Cart
                                         </button>
                                     </div>
@@ -675,78 +556,15 @@
             );
         };
 
-        const EventsSection = () => {
-            return (
-                <section id="events" className="py-20 bg-white">
-                    <div className="container mx-auto px-4">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                                Cultural Events Calendar
-                            </h2>
-                            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                                Experience the rich cultural heritage of Jharkhand through traditional festivals and events
-                            </p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {tourismData.events.map((event) => (
-                                <div key={event.id} className="card-hover bg-gray-50 rounded-2xl overflow-hidden">
-                                    <img 
-                                        src={event.image} 
-                                        alt={event.name}
-                                        className="w-full h-48 object-cover"
-                                    />
-                                    <div className="p-6">
-                                        <h3 className="text-xl font-semibold text-gray-800 mb-2">{event.name}</h3>
-                                        <p className="text-green-600 font-medium mb-2">
-                                            <i className="fas fa-calendar-alt mr-2"></i>
-                                            {event.date}
-                                        </p>
-                                        <p className="text-gray-600 mb-4">{event.description}</p>
-                                        <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
-                                            Book Tickets
-                                        </button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            );
-        };
-
-        const ReviewsSection = () => {
-            return (
-                <section id="reviews" className="py-20 bg-gray-50">
-                    <div className="container mx-auto px-4">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-                                User Reviews & Ratings
-                            </h2>
-                            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                                See what travelers are saying about their experiences in Jharkhand
-                            </p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {tourismData.reviews.map((review) => (
-                                <div key={review.id} className="card-hover bg-white p-6 rounded-2xl">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <h4 className="font-semibold text-gray-800">{review.user}</h4>
-                                        <Stars count={review.rating} />
-                                    </div>
-                                    <p className="text-gray-600 mb-3">{review.comment}</p>
-                                    <div className="flex justify-between items-center">
-                                        <SentimentIndicator sentiment={review.sentiment} />
-                                        <span className="text-sm text-gray-500">Verified Visitor</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            );
-        };
-
+        // Government & Tourism Officials Dashboard (Mockup)
         const DashboardSection = () => {
+            const stats = [
+                { title: "Tourists This Month", value: "1,25,000", icon: "fas fa-users" },
+                { title: "Revenue from Eco-Tourism", value: "₹5 Cr", icon: "fas fa-rupee-sign" },
+                { title: "Trending Destination", value: "Netarhat", icon: "fas fa-chart-line" },
+                { title: "Tourist Satisfaction", value: "85%", icon: "fas fa-smile" },
+            ];
+
             return (
                 <section id="dashboard" className="py-20 bg-white">
                     <div className="container mx-auto px-4">
@@ -755,62 +573,30 @@
                                 Tourism Analytics Dashboard
                             </h2>
                             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                                Real-time insights and analytics for tourism officials and stakeholders
+                                Real-time insights and data for tourism officials to monitor trends and impact.
                             </p>
                         </div>
-                        <div className="dashboard-stats mb-12">
-                            <div className="bg-gray-50 p-6 rounded-2xl text-center">
-                                <div className="text-3xl font-bold text-green-600 mb-2">12,458</div>
-                                <p className="text-gray-600">Monthly Visitors</p>
+                        <div className="bg-gray-50 rounded-2xl p-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {stats.map((stat, index) => (
+                                    <div key={index} className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+                                        <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
+                                            <i className={`${stat.icon} text-2xl`}></i>
+                                        </div>
+                                        <h3 className="text-lg font-semibold text-gray-800">{stat.value}</h3>
+                                        <p className="text-sm text-gray-500">{stat.title}</p>
+                                    </div>
+                                ))}
                             </div>
-                            <div className="bg-gray-50 p-6 rounded-2xl text-center">
-                                <div className="text-3xl font-bold text-green-600 mb-2">₹2.3M</div>
-                                <p className="text-gray-600">Monthly Revenue</p>
-                            </div>
-                            <div className="bg-gray-50 p-6 rounded-2xl text-center">
-                                <div className="text-3xl font-bold text-green-600 mb-2">78%</div>
-                                <p className="text-gray-600">Positive Sentiment</p>
-                            </div>
-                            <div className="bg-gray-50 p-6 rounded-2xl text-center">
-                                <div className="text-3xl font-bold text-green-600 mb-2">342</div>
-                                <p className="text-gray-600">Verified Providers</p>
-                            </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div className="bg-gray-50 p-6 rounded-2xl">
-                                <h3 className="text-xl font-semibold mb-4">Trending Destinations</h3>
-                                <ul className="space-y-2">
-                                    <li className="flex justify-between">
-                                        <span>Netarhat Hill Station</span>
-                                        <span className="text-green-600">4.8★</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Baba Baidyanath Dham</span>
-                                        <span className="text-green-600">4.9★</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Betla National Park</span>
-                                        <span className="text-green-600">4.7★</span>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="bg-gray-50 p-6 rounded-2xl">
-                                <h3 className="text-xl font-semibold mb-4">Revenue Sources</h3>
-                                <ul className="space-y-2">
-                                    <li className="flex justify-between">
-                                        <span>Homestays</span>
-                                        <span className="text-green-600">₹850,000</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Handicrafts</span>
-                                        <span className="text-green-600">₹620,000</span>
-                                    </li>
-                                    <li className="flex justify-between">
-                                        <span>Tour Packages</span>
-                                        <span className="text-green-600">₹480,000</span>
-                                    </li>
-                                </ul>
+                            <div className="mt-12 text-center">
+                                <h3 className="text-2xl font-semibold mb-6">Monthly Tourist Footfall</h3>
+                                <div className="bg-white p-6 rounded-lg shadow-md">
+                                    <img 
+                                        src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d367c3f3-00f0-4613-81e1-11885b552d43.png" 
+                                        alt="Monthly tourist footfall chart showing an upward trend" 
+                                        className="w-full"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -818,121 +604,54 @@
             );
         };
 
-        const ChatWidget = () => {
-            const [isOpen, setIsOpen] = useState(false);
-            const [messages, setMessages] = useState([
-                { text: "Hello! I'm your AI travel assistant. How can I help you plan your Jharkhand trip today?", from: 'bot' }
-            ]);
-            const [input, setInput] = useState('');
-
-            const handleSend = () => {
-                if (!input.trim()) return;
-                
-                setMessages([...messages, { text: input, from: 'user' }]);
-                setInput('');
-                
-                // Simulate AI response
-                setTimeout(() => {
-                    const responses = [
-                        "I can help you with that! What type of experience are you looking for?",
-                        "Great choice! Let me suggest some itineraries based on your interests.",
-                        "I have several options for you. Would you like nature, culture, or adventure activities?",
-                        "Perfect! I can help you book accommodations and activities."
-                    ];
-                    setMessages(prev => [...prev, { 
-                        text: responses[Math.floor(Math.random() * responses.length)], 
-                        from: 'bot' 
-                    }]);
-                }, 1000);
-            };
-
+        // Interactive Map Section
+        const InteractiveMap = () => {
             return (
-                <div className="fixed bottom-6 right-6 z-50">
-                    {isOpen && (
-                        <div className="bg-white rounded-2xl shadow-2xl w-80 h-96 mb-4 overflow-hidden flex flex-col">
-                            <div className="gradient-bg text-white p-4 flex justify-between items-center">
-                                <h3 className="font-semibold">AI Travel Assistant</h3>
-                                <button onClick={() => setIsOpen(false)} className="text-white">
-                                    <i className="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div className="flex-1 p-4 overflow-y-auto chatbot-messages">
-                                {messages.map((msg, index) => (
-                                    <div key={index} className={`mb-3 ${msg.from === 'user' ? 'text-right' : ''}`}>
-                                        <div className={`inline-block p-3 rounded-lg ${
-                                            msg.from === 'user' 
-                                                ? 'bg-green-100 text-green-800' 
-                                                : 'bg-gray-100 text-gray-800'
-                                        }`}>
-                                            {msg.text}
-                                        </div>
+                <section id="map" className="py-20 bg-white">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+                                Interactive Tourism Map
+                            </h2>
+                            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                                Explore Jharkhand's tourist destinations with our interactive map featuring 
+                                AR previews and real-time information
+                            </p>
+                        </div>
+                        <div className="bg-gray-100 rounded-2xl p-8">
+                            <div className="map-container bg-gray-300 relative">
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="text-center">
+                                        <i className="fas fa-map-marked-alt text-6xl text-gray-400 mb-4"></i>
+                                        <p className="text-gray-500">Interactive map loading...</p>
+                                        <p className="text-sm text-gray-400 mt-2">(AR/VR features available in app)</p>
                                     </div>
-                                ))}
+                                </div>
                             </div>
-                            <div className="p-4 border-t">
-                                <div className="flex space-x-2">
-                                    <input 
-                                        type="text" 
-                                        value={input}
-                                        onChange={(e) => setInput(e.target.value)}
-                                        onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                                        placeholder="Type your message..."
-                                        className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
-                                    />
-                                    <button 
-                                        onClick={handleSend}
-                                        className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700"
-                                    >
-                                        <i className="fas fa-paper-plane"></i>
-                                    </button>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                                <div className="text-center p-4 bg-white rounded-lg">
+                                    <i className="fas fa-location-arrow text-2xl text-green-600 mb-2"></i>
+                                    <h4 className="font-semibold">Real-time Location</h4>
+                                    <p className="text-sm text-gray-600">Get precise directions and nearby points of interest</p>
+                                </div>
+                                <div className="text-center p-4 bg-white rounded-lg">
+                                    <i className="fas fa-vr-cardboard text-2xl text-blue-600 mb-2"></i>
+                                    <h4 className="font-semibold">AR Previews</h4>
+                                    <p className="text-sm text-gray-600">Visualize destinations with augmented reality</p>
+                                </div>
+                                <div className="text-center p-4 bg-white rounded-lg">
+                                    <i className="fas fa-users text-2xl text-purple-600 mb-2"></i>
+                                    <h4 className="font-semibold">Local Guides</h4>
+                                    <p className="text-sm text-gray-600">Connect with verified local tour guides</p>
                                 </div>
                             </div>
                         </div>
-                    )}
-                    <button 
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="w-14 h-14 gradient-bg rounded-full shadow-lg flex items-center justify-center text-white text-xl hover:scale-110 transition-transform"
-                    >
-                        <i className="fas fa-robot"></i>
-                    </button>
-                </div>
-            );
-        };
-        
-        const CartSummary = ({ cart }) => {
-            if (cart.length === 0) return null;
-
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-
-            return (
-                <div className="fixed bottom-6 left-6 z-50 bg-white shadow-lg rounded-2xl p-4 w-64 md:w-80">
-                    <h3 className="text-lg font-bold text-green-800 mb-2">Shopping Cart</h3>
-                    <ul className="space-y-2 mb-4 max-h-40 overflow-y-auto">
-                        {cart.map(item => (
-                            <li key={item.id} className="flex justify-between items-center text-sm">
-                                <span>{item.name} ({item.quantity})</span>
-                                <span className="font-semibold text-gray-800">
-                                    ₹{item.price * item.quantity}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                    <div className="border-t border-gray-200 pt-2 flex justify-between font-semibold">
-                        <span>Total Items:</span>
-                        <span>{totalItems}</span>
                     </div>
-                    <div className="flex justify-between font-bold text-lg mt-2 text-green-800">
-                        <span>Total:</span>
-                        <span>₹{totalPrice}</span>
-                    </div>
-                    <button className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
-                        View Cart
-                    </button>
-                </div>
+                </section>
             );
         };
 
+        // Footer Component
         const Footer = () => {
             return (
                 <footer className="gradient-bg text-white py-12">
@@ -950,7 +669,7 @@
                                     <li><a href="#destinations" className="text-green-100 hover:text-white">Destinations</a></li>
                                     <li><a href="#itinerary" className="text-green-100 hover:text-white">Itinerary Planner</a></li>
                                     <li><a href="#marketplace" className="text-green-100 hover:text-white">Marketplace</a></li>
-                                    <li><a href="#events" className="text-green-100 hover:text-white">Cultural Events</a></li>
+                                    <li><a href="#map" className="text-green-100 hover:text-white">Interactive Map</a></li>
                                 </ul>
                             </div>
                             <div>
@@ -997,23 +716,102 @@
             );
         };
 
-        const App = () => {
-            const [cart, setCart] = useState([]);
-            
-            const addToCart = (product) => {
-                setCart(prevCart => {
-                    const existingProduct = prevCart.find(item => item.id === product.id);
-                    if (existingProduct) {
-                        return prevCart.map(item =>
-                            item.id === product.id
-                                ? { ...item, quantity: item.quantity + 1 }
-                                : item
-                        );
-                    }
-                    return [...prevCart, { ...product, quantity: 1 }];
-                });
+        // AI Chat Widget
+        const ChatWidget = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [messages, setMessages] = useState([{
+                text: "Hello! I'm your AI travel assistant. How can I help you plan your Jharkhand trip today?",
+                sender: 'ai'
+            }]);
+            const [input, setInput] = useState('');
+
+            const handleSend = () => {
+                if (input.trim() === '') return;
+
+                const userMessage = { text: input, sender: 'user' };
+                setMessages([...messages, userMessage]);
+                setInput('');
+
+                // Simple AI response logic
+                setTimeout(() => {
+                    const aiResponse = getAiResponse(input);
+                    setMessages(prevMessages => [...prevMessages, { text: aiResponse, sender: 'ai' }]);
+                }, 1000);
             };
 
+            const getAiResponse = (query) => {
+                const lowerQuery = query.toLowerCase();
+                if (lowerQuery.includes('netarhat') || lowerQuery.includes('sunrise')) {
+                    return "Netarhat is famous for its stunning sunrise from Magnolia Point. It's a peaceful hill station, often called the 'Queen of Chotanagpur'. You can also visit Koel View Point for a great sunset.";
+                } else if (lowerQuery.includes('hundru falls')) {
+                    return "Hundru Falls is a spectacular waterfall near Ranchi, where the Subarnarekha River falls from 320 feet. It's a great spot for a day trip.";
+                } else if (lowerQuery.includes('deoghar') || lowerQuery.includes('baidyanath')) {
+                    return "Deoghar is a major pilgrimage site and home to Baba Baidyanath Dham, one of the 12 Jyotirlingas. It's a must-visit for spiritual travelers.";
+                } else if (lowerQuery.includes('hotels')) {
+                    return "We have a wide range of verified accommodations from eco-friendly homestays to luxury hotels. You can check the 'Homestay & Eco-Tourism Booking' section for more details.";
+                } else if (lowerQuery.includes('culture') || lowerQuery.includes('tribal')) {
+                    return "Jharkhand's rich tribal culture is a major attraction. Check out our 'Local Marketplace' for authentic handicrafts and the 'Cultural Events Calendar' for local festivals.";
+                } else if (lowerQuery.includes('thank')) {
+                    return "You're welcome! Feel free to ask if you have any more questions.";
+                } else {
+                    return "I'm not sure how to answer that yet, but I can help you with common questions about Jharkhand's tourist destinations, culture, and travel plans.";
+                }
+            };
+
+            return (
+                <div className="fixed bottom-6 right-6 z-50">
+                    {isOpen && (
+                        <div className="bg-white rounded-2xl shadow-2xl w-80 h-96 mb-4 overflow-hidden flex flex-col">
+                            <div className="gradient-bg text-white p-4 flex justify-between items-center">
+                                <h3 className="font-semibold">AI Travel Assistant</h3>
+                                <button onClick={() => setIsOpen(false)} className="text-white">
+                                    <i className="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div className="p-4 flex-grow overflow-y-auto space-y-3">
+                                {messages.map((msg, index) => (
+                                    <div 
+                                        key={index}
+                                        className={`p-3 rounded-lg ${msg.sender === 'user' ? 'bg-green-100 text-gray-800 self-end ml-auto' : 'bg-gray-100 text-gray-800'}`}
+                                    >
+                                        <p className="text-sm">{msg.text}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="p-4 border-t">
+                                <div className="flex items-center space-x-2">
+                                    <input 
+                                        type="text" 
+                                        placeholder="Type your message..."
+                                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter') handleSend();
+                                        }}
+                                    />
+                                    <button 
+                                        onClick={handleSend}
+                                        className="bg-green-600 text-white p-3 rounded-lg hover:bg-green-700"
+                                    >
+                                        <i className="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    <button 
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="w-14 h-14 gradient-bg rounded-full shadow-lg flex items-center justify-center text-white text-xl hover:scale-110 transition-transform"
+                    >
+                        <i className="fas fa-robot"></i>
+                    </button>
+                </div>
+            );
+        };
+
+        // Main App Component
+        const App = () => {
             return (
                 <div className="min-h-screen">
                     <Header />
@@ -1021,17 +819,16 @@
                     <FeaturesSection />
                     <DestinationsSection />
                     <ItineraryPlanner />
-                    <MarketplaceSection onAddToCart={addToCart} />
-                    <EventsSection />
-                    <ReviewsSection />
+                    <MarketplaceSection />
                     <DashboardSection />
+                    <InteractiveMap />
                     <Footer />
                     <ChatWidget />
-                    <CartSummary cart={cart} />
                 </div>
             );
         };
 
+        // Render the app
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
