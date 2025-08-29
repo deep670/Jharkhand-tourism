@@ -174,7 +174,7 @@
                     id: 1,
                     name: "Tribal Dokra Art",
                     image: "https://placehold.co/400x300/1e40af/white?text=Dokra+Art",
-                    price: "₹1,500",
+                    price: "1500",
                     description: "Handcrafted metal art from tribal artisans",
                     verified: true,
                     rating: 4.9
@@ -183,7 +183,7 @@
                     id: 2,
                     name: "Handloom Sarees",
                     image: "https://placehold.co/400x300/d946ef/white?text=Handloom+Sarees",
-                    price: "₹2,500",
+                    price: "2500",
                     description: "Traditional handwoven sarees with tribal patterns",
                     verified: true,
                     rating: 4.7
@@ -192,7 +192,7 @@
                     id: 3,
                     name: "Forest Honey",
                     image: "https://placehold.co/400x300/ea580c/white?text=Forest+Honey",
-                    price: "₹450",
+                    price: "450",
                     description: "Organic honey from tribal forest communities",
                     verified: true,
                     rating: 4.8
@@ -201,7 +201,7 @@
                     id: 4,
                     name: "Terracotta Pottery",
                     image: "https://placehold.co/400x300/059669/white?text=Terracotta",
-                    price: "₹800",
+                    price: "800",
                     description: "Traditional terracotta pots and decor items",
                     verified: false,
                     rating: 4.6
@@ -361,20 +361,20 @@
                     <div className="container mx-auto px-4">
                         <div className="flex flex-col lg:flex-row items-center justify-between">
                             <div className="lg:w-1/2 mb-10 lg:mb-0">
-                                <h2 className="text-5xl font-bold mb-6 leading-tight">
+                                <h2 className="text-5xl font-bold mb-6 leading-tight text-gray-800">
                                     Discover the Hidden Gem of India<br />
-                                    <span className="text-green-300">Jharkhand</span>
+                                    <span className="text-green-500">Jharkhand</span>
                                 </h2>
-                                <p className="text-xl mb-8 text-green-100">
+                                <p className="text-xl mb-8 text-gray-600">
                                     Experience the perfect blend of natural beauty, rich tribal culture, and 
                                     unforgettable adventures with our AI-powered tourism platform.
                                 </p>
                                 <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                                    <button className="bg-white text-green-800 px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-100 transition-colors flex items-center justify-center">
+                                    <button className="bg-green-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-700 transition-colors flex items-center justify-center">
                                         <i className="fas fa-route mr-2"></i>
                                         Plan My Trip
                                     </button>
-                                    <button className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-green-800 transition-colors flex items-center justify-center">
+                                    <button className="border-2 border-green-600 text-green-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-green-600 hover:text-white transition-colors flex items-center justify-center">
                                         <i className="fas fa-video mr-2"></i>
                                         VR Preview
                                     </button>
@@ -630,7 +630,7 @@
             );
         };
 
-        const MarketplaceSection = () => {
+        const MarketplaceSection = ({ onAddToCart }) => {
             return (
                 <section id="marketplace" className="py-20 bg-gray-50">
                     <div className="container mx-auto px-4">
@@ -654,13 +654,16 @@
                                     <div className="p-6">
                                         <h3 className="text-lg font-semibold text-gray-800 mb-2">{product.name}</h3>
                                         <div className="flex justify-between items-center mb-3">
-                                            <span className="text-2xl font-bold text-green-600">{product.price}</span>
+                                            <span className="text-2xl font-bold text-green-600">₹{product.price}</span>
                                             <span className="text-sm text-yellow-500">
                                                 <i className="fas fa-star"></i> {product.rating}
                                             </span>
                                         </div>
                                         <p className="text-gray-600 text-sm mb-4">{product.description}</p>
-                                        <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                        <button 
+                                            onClick={() => onAddToCart(product)}
+                                            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors"
+                                        >
                                             Add to Cart
                                         </button>
                                     </div>
@@ -895,6 +898,40 @@
                 </div>
             );
         };
+        
+        const CartSummary = ({ cart }) => {
+            if (cart.length === 0) return null;
+
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+            return (
+                <div className="fixed bottom-6 left-6 z-50 bg-white shadow-lg rounded-2xl p-4 w-64 md:w-80">
+                    <h3 className="text-lg font-bold text-green-800 mb-2">Shopping Cart</h3>
+                    <ul className="space-y-2 mb-4 max-h-40 overflow-y-auto">
+                        {cart.map(item => (
+                            <li key={item.id} className="flex justify-between items-center text-sm">
+                                <span>{item.name} ({item.quantity})</span>
+                                <span className="font-semibold text-gray-800">
+                                    ₹{item.price * item.quantity}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                    <div className="border-t border-gray-200 pt-2 flex justify-between font-semibold">
+                        <span>Total Items:</span>
+                        <span>{totalItems}</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-lg mt-2 text-green-800">
+                        <span>Total:</span>
+                        <span>₹{totalPrice}</span>
+                    </div>
+                    <button className="mt-4 w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        View Cart
+                    </button>
+                </div>
+            );
+        };
 
         const Footer = () => {
             return (
@@ -961,6 +998,22 @@
         };
 
         const App = () => {
+            const [cart, setCart] = useState([]);
+            
+            const addToCart = (product) => {
+                setCart(prevCart => {
+                    const existingProduct = prevCart.find(item => item.id === product.id);
+                    if (existingProduct) {
+                        return prevCart.map(item =>
+                            item.id === product.id
+                                ? { ...item, quantity: item.quantity + 1 }
+                                : item
+                        );
+                    }
+                    return [...prevCart, { ...product, quantity: 1 }];
+                });
+            };
+
             return (
                 <div className="min-h-screen">
                     <Header />
@@ -968,12 +1021,13 @@
                     <FeaturesSection />
                     <DestinationsSection />
                     <ItineraryPlanner />
-                    <MarketplaceSection />
+                    <MarketplaceSection onAddToCart={addToCart} />
                     <EventsSection />
                     <ReviewsSection />
                     <DashboardSection />
                     <Footer />
                     <ChatWidget />
+                    <CartSummary cart={cart} />
                 </div>
             );
         };
@@ -982,4 +1036,4 @@
         root.render(<App />);
     </script>
 </body>
-</html>
+    </html>
